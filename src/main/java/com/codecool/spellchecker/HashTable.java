@@ -1,6 +1,7 @@
 package com.codecool.spellchecker;
 
-import com.codecool.spellchecker.StringHasher;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -15,6 +16,9 @@ import com.codecool.spellchecker.StringHasher;
 
 public class HashTable
 {
+	private Map<Integer, String> map;
+	private int tableSize;
+	private StringHasher hasher;
 	/**
    * The constructor is given a table size (i.e. how big to make the array)
    * and a StringHasher, which is used to hash the strings.
@@ -25,7 +29,9 @@ public class HashTable
    */
 	public HashTable(int tableSize, StringHasher hasher)
 	{
-
+		this.tableSize = tableSize;
+		this.hasher = hasher;
+		this.map = new HashMap<>();
 	}
 
 
@@ -37,7 +43,7 @@ public class HashTable
    */
 	public void add(String s)
 	{
-
+		map.putIfAbsent(hasher.hash(s), s);
 	}
 	
 
@@ -49,7 +55,12 @@ public class HashTable
   */
 	public boolean lookup(String s)
 	{
-
+		for (String value : this.map.values()) {
+			if (value.equals(s)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 
@@ -61,6 +72,10 @@ public class HashTable
   */
 	public void remove(String s)
 	{
-
+		for (String value : this.map.values()) {
+			if (value.equals(s)) {
+				this.map.remove(hasher.hash(s));
+			}
+		}
 	}
 }

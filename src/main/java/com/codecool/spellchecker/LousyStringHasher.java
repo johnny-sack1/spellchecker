@@ -1,7 +1,5 @@
 package com.codecool.spellchecker;
 
-import com.codecool.spellchecker.StringHasher;
-
 /**
  *
  * ICS 23 Summer 2004
