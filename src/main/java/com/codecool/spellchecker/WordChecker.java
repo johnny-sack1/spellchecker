@@ -1,6 +1,7 @@
 package com.codecool.spellchecker;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -62,13 +63,15 @@ public class WordChecker
 	public ArrayList<String> getSuggestions(String word)
 	{
 		ArrayList<String> suggestions = new ArrayList<>();
-		suggestions.addAll(getWordsFromSwappingAdjacentPairsOfLetters(word));
+		suggestions.addAll(getSuggestionsSwappingAdjacentPairsOfLetters(word));
+		suggestions.addAll(getSuggestionsInsertingLetters(word));
 		return suggestions;
 	}
 
-	public ArrayList<String> getWordsFromSwappingAdjacentPairsOfLetters(String word) {
-		ArrayList<String> words = new ArrayList<>();
+	private ArrayList<String> getSuggestionsSwappingAdjacentPairsOfLetters(String word) {
+		ArrayList<String> suggestions = new ArrayList<>();
 		char[] wordCharArr = word.toCharArray();
+
 		for (int i = 0; i < word.length() - 1; i++) {
 			char[] resultingWordCharArr = new char[wordCharArr.length];
 			System.arraycopy(wordCharArr, 0, resultingWordCharArr, 0, wordCharArr.length);
@@ -76,8 +79,26 @@ public class WordChecker
 			char secondLetterInPair = wordCharArr[i + 1];
 			resultingWordCharArr[i] = secondLetterInPair;
 			resultingWordCharArr[i + 1] = firstLetterInPair;
-			words.add(new String(resultingWordCharArr));
+
+			String possibleSuggestion = new String(resultingWordCharArr);
+			if (wordList.lookup(possibleSuggestion)) {
+				suggestions.add(possibleSuggestion);
+			}
 		}
-		return words;
+		return suggestions;
+	}
+
+	private ArrayList<String> getSuggestionsInsertingLetters(String word) {
+		ArrayList<String> suggestions = new ArrayList<>();
+
+		for (int i = 0; i < word.length() + 1; i++) {
+			for (char c = 'a'; c <= 'z'; c++) {
+				String possibleSuggestion = word.substring(0, i) + c + word.substring(i, word.length());
+				if (wordList.lookup(possibleSuggestion)) {
+					suggestions.add(possibleSuggestion);
+				}
+			}
+		}
+		return suggestions;
 	}
 }
