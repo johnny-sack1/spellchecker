@@ -67,6 +67,7 @@ public class WordChecker
 		suggestions.addAll(getSuggestionsInsertingLetters(word));
 		suggestions.addAll(getSuggestionsRemovingLetters(word));
 		suggestions.addAll(getSuggestionsReplacingLetters(word));
+		suggestions.addAll(getSuggestionsSplittingWord(word));
 		return suggestions;
 	}
 
@@ -129,6 +130,19 @@ public class WordChecker
 				if (wordList.lookup(possibleSuggestion)) {
 					suggestions.add(possibleSuggestion);
 				}
+			}
+		}
+		return suggestions;
+	}
+
+	private ArrayList<String> getSuggestionsSplittingWord(String word) {
+		ArrayList<String> suggestions = new ArrayList<>();
+
+		for (int i = 1; i < word.length(); i++) {
+			String firstPart = word.substring(0, i);
+			String secondPart = word.substring(i, word.length());
+			if (wordList.lookup(firstPart) && wordList.lookup(secondPart)) {
+				suggestions.add(firstPart + " " + secondPart);
 			}
 		}
 		return suggestions;
