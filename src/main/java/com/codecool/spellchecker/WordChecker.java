@@ -1,8 +1,7 @@
 package com.codecool.spellchecker;
 
-import com.codecool.spellchecker.WordList;
-
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -23,6 +22,7 @@ import java.util.ArrayList;
 
 public class WordChecker
 {
+	private WordList wordList;
 	/**
    * Constructor that initializes a new WordChecker with a given WordList.
    *
@@ -31,6 +31,9 @@ public class WordChecker
    */
 	public WordChecker(WordList wordList)
 	{
+		this.wordList = wordList;
+	}
+	public WordChecker() {
 
 	}
 	
@@ -39,12 +42,12 @@ public class WordChecker
    * Returns true if the given word is in the WordList passed to the
    * constructor, false otherwise. 
    *
-   * @param word Word to chack against the internal word list
-   * @return bollean indicating if the word was found or not.
+   * @param word Word to check against the internal word list
+   * @return boolean indicating if the word was found or not.
    */
 	public boolean wordExists(String word)
 	{
-
+		return wordList.lookup(word);
 	}
 
 
@@ -56,8 +59,25 @@ public class WordChecker
    * @param word String to check against
    * @return A list of plausible matches
    */
-	public ArrayList getSuggestions(String word)
+	public ArrayList<String> getSuggestions(String word)
 	{
+		ArrayList<String> suggestions = new ArrayList<>();
+		suggestions.addAll(getWordsFromSwappingAdjacentPairsOfLetters(word));
+		return suggestions;
+	}
 
+	public ArrayList<String> getWordsFromSwappingAdjacentPairsOfLetters(String word) {
+		ArrayList<String> words = new ArrayList<>();
+		char[] wordCharArr = word.toCharArray();
+		for (int i = 0; i < word.length() - 1; i++) {
+			char[] resultingWordCharArr = new char[wordCharArr.length];
+			System.arraycopy(wordCharArr, 0, resultingWordCharArr, 0, wordCharArr.length);
+			char firstLetterInPair = wordCharArr[i];
+			char secondLetterInPair = wordCharArr[i + 1];
+			resultingWordCharArr[i] = secondLetterInPair;
+			resultingWordCharArr[i + 1] = firstLetterInPair;
+			words.add(new String(resultingWordCharArr));
+		}
+		return words;
 	}
 }
