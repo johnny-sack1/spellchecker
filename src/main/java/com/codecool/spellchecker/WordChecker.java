@@ -65,6 +65,8 @@ public class WordChecker
 		ArrayList<String> suggestions = new ArrayList<>();
 		suggestions.addAll(getSuggestionsSwappingAdjacentPairsOfLetters(word));
 		suggestions.addAll(getSuggestionsInsertingLetters(word));
+		suggestions.addAll(getSuggestionsRemovingLetters(word));
+		suggestions.addAll(getSuggestionsReplacingLetters(word));
 		return suggestions;
 	}
 
@@ -94,6 +96,36 @@ public class WordChecker
 		for (int i = 0; i < word.length() + 1; i++) {
 			for (char c = 'a'; c <= 'z'; c++) {
 				String possibleSuggestion = word.substring(0, i) + c + word.substring(i, word.length());
+				if (wordList.lookup(possibleSuggestion)) {
+					suggestions.add(possibleSuggestion);
+				}
+			}
+		}
+		return suggestions;
+	}
+
+	private ArrayList<String> getSuggestionsRemovingLetters(String word) {
+		ArrayList<String> suggestions = new ArrayList<>();
+
+		for (int i = 0; i < word.length(); i++) {
+			StringBuilder sb = new StringBuilder(word);
+			sb.deleteCharAt(i);
+			String possibleSuggestion = sb.toString();
+			if (wordList.lookup(possibleSuggestion)) {
+				suggestions.add(possibleSuggestion);
+			}
+		}
+		return suggestions;
+	}
+
+	private ArrayList<String> getSuggestionsReplacingLetters(String word) {
+		ArrayList<String> suggestions = new ArrayList<>();
+
+		for (int i = 0; i < word.length(); i++) {
+			StringBuilder sb = new StringBuilder(word);
+			for (char c = 'a'; c <= 'z'; c++) {
+				sb.setCharAt(i, c);
+				String possibleSuggestion = sb.toString();
 				if (wordList.lookup(possibleSuggestion)) {
 					suggestions.add(possibleSuggestion);
 				}
