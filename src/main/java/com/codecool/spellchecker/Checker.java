@@ -14,7 +14,6 @@ public class Checker
         WordList localWordList = new WordList(paramString2, paramStringHasher);
 
         BufferedReader localBufferedReader = new BufferedReader(new java.io.FileReader(paramString1));
-
         String str1 = localBufferedReader.readLine();
         WordLineReader localWordLineReader = new WordLineReader(str1);
 
@@ -24,7 +23,7 @@ public class Checker
             Iterator localIterator;
             while (localWordLineReader.hasNextWord())
             {
-                String str2 = localWordLineReader.nextWord().toUpperCase();
+                String str2 = localWordLineReader.nextWord().toLowerCase();
 
                 if (!localWordChecker.wordExists(str2))
                 {

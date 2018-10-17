@@ -14,12 +14,11 @@ public class WordList
         BufferedReader localBufferedReader = new BufferedReader(new FileReader(paramString));
 
         int i = Integer.parseInt(localBufferedReader.readLine());
-
         hashTable = new HashTable((int)(i * 1.2D), paramStringHasher);
 
         for (int j = 0; j < i; j++)
         {
-            hashTable.add(localBufferedReader.readLine().trim().toUpperCase());
+            hashTable.add(localBufferedReader.readLine().trim().toLowerCase());
         }
 
         localBufferedReader.close();
@@ -28,6 +27,6 @@ public class WordList
 
     public boolean lookup(String paramString)
     {
-        return hashTable.lookup(paramString.toUpperCase());
+        return hashTable.lookup(paramString.toLowerCase());
     }
 }

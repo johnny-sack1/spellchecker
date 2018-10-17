@@ -34,10 +34,6 @@ public class WordChecker
 	{
 		this.wordList = wordList;
 	}
-	public WordChecker() {
-
-	}
-	
 
 	/**
    * Returns true if the given word is in the WordList passed to the
@@ -84,7 +80,7 @@ public class WordChecker
 			resultingWordCharArr[i + 1] = firstLetterInPair;
 
 			String possibleSuggestion = new String(resultingWordCharArr);
-			if (wordList.lookup(possibleSuggestion)) {
+			if (wordExists(possibleSuggestion)) {
 				suggestions.add(possibleSuggestion);
 			}
 		}
@@ -97,7 +93,7 @@ public class WordChecker
 		for (int i = 0; i < word.length() + 1; i++) {
 			for (char c = 'a'; c <= 'z'; c++) {
 				String possibleSuggestion = word.substring(0, i) + c + word.substring(i, word.length());
-				if (wordList.lookup(possibleSuggestion)) {
+				if (wordExists(possibleSuggestion)) {
 					suggestions.add(possibleSuggestion);
 				}
 			}
@@ -112,7 +108,7 @@ public class WordChecker
 			StringBuilder sb = new StringBuilder(word);
 			sb.deleteCharAt(i);
 			String possibleSuggestion = sb.toString();
-			if (wordList.lookup(possibleSuggestion)) {
+			if (wordExists(possibleSuggestion)) {
 				suggestions.add(possibleSuggestion);
 			}
 		}
@@ -127,7 +123,7 @@ public class WordChecker
 			for (char c = 'a'; c <= 'z'; c++) {
 				sb.setCharAt(i, c);
 				String possibleSuggestion = sb.toString();
-				if (wordList.lookup(possibleSuggestion)) {
+				if (wordExists(possibleSuggestion)) {
 					suggestions.add(possibleSuggestion);
 				}
 			}
@@ -141,7 +137,7 @@ public class WordChecker
 		for (int i = 1; i < word.length(); i++) {
 			String firstPart = word.substring(0, i);
 			String secondPart = word.substring(i, word.length());
-			if (wordList.lookup(firstPart) && wordList.lookup(secondPart)) {
+			if (wordExists(firstPart) && wordExists(secondPart)) {
 				suggestions.add(firstPart + " " + secondPart);
 			}
 		}

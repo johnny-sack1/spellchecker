@@ -1,5 +1,6 @@
 package com.codecool.spellchecker;
 
+import java.io.File;
 import java.io.PrintStream;
 
 public class SpellCheck
@@ -15,8 +16,8 @@ public class SpellCheck
         }
 
         String str1 = paramArrayOfString[(paramArrayOfString.length - 1)];
-        String str2 = "wordlist.txt";
-        Object localObject = new LousyStringHasher();
+        String str2 = new File("wordlist.txt").getAbsolutePath();
+        Object localObject = new BetterStringHasher();
         PrintStream localPrintStream = System.out;
         int i = 0;
 

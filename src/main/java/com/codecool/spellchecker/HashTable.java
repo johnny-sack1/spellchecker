@@ -55,12 +55,7 @@ public class HashTable
   */
 	public boolean lookup(String s)
 	{
-		for (String value : this.map.values()) {
-			if (value.equals(s)) {
-				return true;
-			}
-		}
-		return false;
+		return this.map.containsValue(s);
 	}
 	
 
