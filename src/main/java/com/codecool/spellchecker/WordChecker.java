@@ -1,8 +1,6 @@
 package com.codecool.spellchecker;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  *
@@ -56,14 +54,18 @@ public class WordChecker
    * @param word String to check against
    * @return A list of plausible matches
    */
-	public ArrayList<String> getSuggestions(String word)
+	public List<String> getSuggestions(String word)
 	{
-		ArrayList<String> suggestions = new ArrayList<>();
+		List<String> suggestions = new ArrayList<>();
 		suggestions.addAll(getSuggestionsSwappingAdjacentPairsOfLetters(word));
 		suggestions.addAll(getSuggestionsInsertingLetters(word));
 		suggestions.addAll(getSuggestionsRemovingLetters(word));
 		suggestions.addAll(getSuggestionsReplacingLetters(word));
 		suggestions.addAll(getSuggestionsSplittingWord(word));
+
+		Set<String> set = new HashSet<>(suggestions);
+		suggestions.clear();
+		suggestions.addAll(set);
 		return suggestions;
 	}
 
